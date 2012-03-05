@@ -17,29 +17,25 @@
 		// Plugin code goes here to respect chaining.
 		return this.each(function() {
 			$(this).find(':input').each(function( index, element ) {
+				var parentElement;
 				if( $(element).data('formieBind') ) {
-					var childElement = $(element);
-					var formieData = childElement.data();
-					var parentElement = $('[name="' + childElement.data('formieBind') + '"]' ).last();
-
-					parentElement.bind('change.formie', createExpressionHandler( childElement, parentElement, formieData, settings.action ) );
+					parentElement = $('[name="' + $(element).data('formieBind') + '"]' ).last();
+					parentElement.bind('change.formie', createExpressionHandler( $(element), parentElement, settings.action ) );
 				}
 				else if( $(element).data('formieIsChecked') ) {
-					var childElement = $(element);
-					var formieData = childElement.data();
-					var parentElement = $('[name="' + childElement.data('formieBind') + '"]' ).last();
-
-					parentElement.bind('change.formie', createCheckedHandler( childElement, parentElement, formieData, settings.action ) );
+					parentElement = $('[name="' + $(element).data('formieIsChecked') + '"]' ).last();
+					parentElement.bind('change.formie', createCheckedHandler( $(element), parentElement, settings.action ) );
 				}
 			});
 		});
 	};
 
-	createExpressionHandler = function( childElement, parentElement, formieData, action ) {
+	createExpressionHandler = function( childElement, parentElement, action ) {
 		var comparator = '';
 		var value = '';
+		var data = childElement.data();
 
-		for( var p in formieData ) {
+		for( var p in data ) {
 			switch( p ) {
 				case 'formieEquals':
 					comparator = '=';
@@ -70,6 +66,10 @@
 			case '<':
 				return function() { action( childElement, parentElement.val() < value ); };
 		}
+	};
+
+	createCheckedHandler = function( childElement, parentElement, action ) {
+		return function() { action( childElement, parentElement.attr('checked') == 'checked' ); };
 	};
 
 })( jQuery );

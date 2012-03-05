@@ -2,6 +2,12 @@
 
 Formie lets you set up simple events based on changes to your form data.
 
+### Options
+* 'action' : a function that is called when the parent element has changed its value.
+  * parameters
+  * element - The child element that will be updated
+  * truthyness - The result of the bound expression
+
 ### Data elements
 <table>
 	<tr>
@@ -54,7 +60,7 @@ Basic form example
 		<option value='London'>London</option>
 	</select>
 	<!-- Dependant child element -->
-	<select name='city-alberta' data-formie-bind='province' data-formie-equals='ON'>
+	<select name='city-alberta' data-formie-bind='province' data-formie-equals='AB'>
 		<option value='Calgary'>Calgary</option>
 		<option value='Victoria'>Victoria</option>
 	</select>
@@ -65,7 +71,8 @@ Basic form example
 $(document).ready(function() {
 	$('#testform').formie({
 		// element is the child that called 'data-formie-bind' on another element
-		// truthyness is the result of the comparator that that element contained eg: 'data-formie-equals'
+		// truthyness is the result of the comparator 
+		// that that element contained eg: 'data-formie-equals'
 		'action': function( element, truthyness ) {
 			if( truthyness ) {
 				console.log( 'Do something with ' + element );

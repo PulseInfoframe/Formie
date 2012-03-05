@@ -1,0 +1,52 @@
+<html>
+	<head>
+		<title>Formie tests</title>
+		<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
+		<script src='../formie.js'></script>
+		<script>
+			$(document).ready(function() {
+				$('#testform').formie();
+			});
+		</script>
+	</head>
+	<body>
+		<form id='testform'>
+			<label for='firstname'>Firstname:</label>
+			<input type='text' id='firstname' name='firstname'></input>
+			<br />
+			<label for='province'>Province:</label>
+			<select id='province' name='province'>
+				<option value=''></option>
+				<option value='ON'>Ontario</option>
+				<option value='AB'>Alberta</option>
+			</select>
+			<br />
+			<label for='city'>City:</label>
+			<select id='city' name='city' data-formie-bind='province' data-formie-equals='ON'>
+				<option value=''></option>
+				<option value='Toronto'>Toronto</option>
+				<option value='London'>London</option>
+			</select>
+			<select id='city' name='city' data-formie-bind='province' data-formie-equals='AB'>
+				<option value=''></option>
+				<option value='Calgary'>Calgary</option>
+				<option value='Victoria'>Victoria</option>
+			</select>
+			<br />
+			<label for='levels'>
+			</label>
+			<select id='levels' name='levels'>
+				<option value=''></option>
+				<option value='1'>1</option>
+				<option value='2'>2</option>
+				<option value='3'>3</option>
+				<option value='4'>4</option>
+				<option value='5'>5</option>
+			</select>
+			<input type='text' id='level-equals-1' name='level-equals-1' value='levels = 1' data-formie-bind='levels' data-formie-equals='1'></input>
+			<input type='text' id='level-greator-2' name='level-greator-2' value='levels > 2' data-formie-bind='levels' data-formie-greator-than='2'></input>
+			<br />
+			<input type='submit'></input>
+		</form>
+	</body>
+</html>

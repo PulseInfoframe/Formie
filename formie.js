@@ -16,18 +16,26 @@
 
 		// Plugin code goes here to respect chaining.
 		return this.each(function() {
-			$(this).children().each(function( index, element ) {
+			$(this).find(':input').each(function( index, element ) {
 				if( $(element).data('formieBind') ) {
 					var childElement = $(element);
 					var formieData = childElement.data();
-					var parentElement = $('#' + childElement.data('formieBind') );
-					parentElement.bind('change.formie', createHandler( childElement, parentElement, formieData, settings.action ) );
+					var parentElement = $('[name="' + childElement.data('formieBind') + '"]' ).last();
+
+					parentElement.bind('change.formie', createExpressionHandler( childElement, parentElement, formieData, settings.action ) );
+				}
+				else if( $(element).data('formieIsChecked') ) {
+					var childElement = $(element);
+					var formieData = childElement.data();
+					var parentElement = $('[name="' + childElement.data('formieBind') + '"]' ).last();
+
+					parentElement.bind('change.formie', createCheckedHandler( childElement, parentElement, formieData, settings.action ) );
 				}
 			});
 		});
 	};
 
-	createHandler = function( childElement, parentElement, formieData, action ) {
+	createExpressionHandler = function( childElement, parentElement, formieData, action ) {
 		var comparator = '';
 		var value = '';
 
@@ -48,10 +56,12 @@
 			}
 		}
 
-		return conditional( childElement, parentElement, value, comparator, action );
+		console.log( childElement, parentElement );
+		return createExpressionCallback( childElement, parentElement, value, comparator, action );
 	};
 	
-	conditional = function( childElement, parentElement, value, comparator, action ) {
+	createExpressionCallback = function( childElement, parentElement, value, comparator, action ) {
+		console.log( comparator );
 		switch( comparator ) {
 			case '=':
 				return function() { action( childElement, parentElement.val() == value ); };
@@ -63,3 +73,4 @@
 	};
 
 })( jQuery );
+

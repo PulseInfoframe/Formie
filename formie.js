@@ -19,11 +19,11 @@
 				var parentElement;
 				if( $(element).data('formieBind') ) {
 					parentElement = $('[name="' + $(element).data('formieBind') + '"]' ).last();
-					parentElement.bind('change.formie', createExpressionHandler( $(element), parentElement, settings.action ) );
+					parentElement.bind('change.formie', createExpressionHandler( $(element), parentElement, settings.action ) ).change();
 				}
 				else if( $(element).data('formieIsChecked') ) {
 					parentElement = $('[name="' + $(element).data('formieIsChecked') + '"]' ).last();
-					parentElement.bind('change.formie', createCheckedHandler( $(element), parentElement, settings.action ) );
+					parentElement.bind('change.formie', createCheckedHandler( $(element), parentElement, settings.action ) ).change();
 				}
 			});
 		});
@@ -51,10 +51,6 @@
 			}
 		}
 
-		return createExpressionCallback( childElement, parentElement, value, comparator, action );
-	};
-	
-	createExpressionCallback = function( childElement, parentElement, value, comparator, action ) {
 		switch( comparator ) {
 			case '=':
 				return function() { action( childElement, parentElement.val() == value ); };
@@ -64,7 +60,7 @@
 				return function() { action( childElement, parentElement.val() < value ); };
 		}
 	};
-
+	
 	createCheckedHandler = function( childElement, parentElement, action ) {
 		return function() { action( childElement, parentElement.attr('checked') == 'checked' ); };
 	};

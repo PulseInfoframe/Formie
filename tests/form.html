@@ -1,52 +1,84 @@
 <html>
 	<head>
 		<title>Formie tests</title>
+		<link rel='stylesheet' href='../qunit/qunit.css' type='text/css' />
+		<script src='../qunit/qunit.js'></script>
 		<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
 		<script src='../formie.js'></script>
 		<script>
 			$(document).ready(function() {
 				$('#testform').formie();
+
+				test("data-formie-equals", function() {
+					$('#province').val('ON').change();
+					equal( $('#city1').attr('disabled'), undefined, "Test that city1 is enabled when ON is selected" );
+					equal( $('#city2').attr('disabled'), 'disabled', "Test that city2 is disabled when ON is selected" );
+					$('#province').val('AB').change();
+					equal( $('#city1').attr('disabled'), 'disabled', "Test that city1 is disabled when AB is selected" );
+					equal( $('#city2').attr('disabled'), undefined, "Test that city2 is enabled when AB is selected" );
+					$('#checkbox').prop('checked', true).change();
+					equal( $('#checkbox_child').attr('disabled'), undefined, "Test that the checkbox is enabled when our checkbox is true" );
+					$('#checkbox').prop('checked', false).change();
+					equal( $('#checkbox_child').attr('disabled'), 'disabled', "Test that the checkbox is disabled when our checkbox is false" );
+				});
+
+				//test("data-formie-checked", function() {
+				//	$('#checkbox').prop('checked', true).change();
+				//	equal( $('#checkbox_child').attr('disabled'), undefined, "Test that the checkbox is enabled when our checkbox is true" );
+				//	$('#checkbox').prop('checked', false).change();
+				//	equal( $('#checkbox_child').attr('disabled'), 'disabled', "Test that the checkbox is disabled when our checkbox is false" );
+				//});
+
 			});
 		</script>
 	</head>
 	<body>
-		<form id='testform'>
-			<label for='firstname'>Firstname:</label>
-			<input type='text' id='firstname' name='firstname'></input>
-			<br />
-			<label for='province'>Province:</label>
-			<select id='province' name='province'>
-				<option value=''></option>
-				<option value='ON'>Ontario</option>
-				<option value='AB'>Alberta</option>
-			</select>
-			<br />
-			<label for='city'>City:</label>
-			<select id='city' name='city' data-formie-bind='province' data-formie-equals='ON'>
-				<option value=''></option>
-				<option value='Toronto'>Toronto</option>
-				<option value='London'>London</option>
-			</select>
-			<select id='city' name='city' data-formie-bind='province' data-formie-equals='AB'>
-				<option value=''></option>
-				<option value='Calgary'>Calgary</option>
-				<option value='Victoria'>Victoria</option>
-			</select>
-			<br />
-			<label for='levels'>
-			</label>
-			<select id='levels' name='levels'>
-				<option value=''></option>
-				<option value='1'>1</option>
-				<option value='2'>2</option>
-				<option value='3'>3</option>
-				<option value='4'>4</option>
-				<option value='5'>5</option>
-			</select>
-			<input type='text' id='level-equals-1' name='level-equals-1' value='levels = 1' data-formie-bind='levels' data-formie-equals='1'></input>
-			<input type='text' id='level-greator-2' name='level-greator-2' value='levels > 2' data-formie-bind='levels' data-formie-greator-than='2'></input>
-			<br />
-			<input type='submit'></input>
-		</form>
+		<h1 id="qunit-header">QUnit example</h1>
+		<h2 id="qunit-banner"></h2>
+		<div id="qunit-testrunner-toolbar"></div>
+		<h2 id="qunit-userAgent"></h2>
+		<ol id="qunit-tests"></ol>
+		<div id='qunit-fixture'>
+			<form id='testform'>
+				<label for='firstname'>Firstname:</label>
+				<input type='text' id='firstname' name='firstname'></input>
+				<br />
+				<label for='province'>Province:</label>
+				<select id='province' name='province'>
+					<option value=''></option>
+					<option value='ON'>Ontario</option>
+					<option value='AB'>Alberta</option>
+				</select>
+				<br />
+				<label for='city'>City:</label>
+				<select id='city1' name='city' data-formie-bind='province' data-formie-equals='ON'>
+					<option value=''></option>
+					<option value='Toronto'>Toronto</option>
+					<option value='London'>London</option>
+				</select>
+				<select id='city2' name='city' data-formie-bind='province' data-formie-equals='AB'>
+					<option value=''></option>
+					<option value='Calgary'>Calgary</option>
+					<option value='Victoria'>Victoria</option>
+				</select>
+				<br />
+				<label for='levels'>
+				</label>
+				<select id='levels' name='levels'>
+					<option value=''></option>
+					<option value='1'>1</option>
+					<option value='2'>2</option>
+					<option value='3'>3</option>
+					<option value='4'>4</option>
+					<option value='5'>5</option>
+				</select>
+				<input type='text' id='level-equals-1' name='level-equals-1' value='levels = 1' data-formie-bind='levels' data-formie-equals='1'></input>
+				<input type='text' id='level-greator-2' name='level-greator-2' value='levels > 2' data-formie-bind='levels' data-formie-greator-than='2'></input>
+				<br />
+				<input type='checkbox' id='checkbox' name='checkbox' />
+				<input type='text' id='checkbox_child' name='checkbox_child' data-formie-is-checked='checkbox' />
+				<input type='submit'></input>
+			</form>
+		</div>
 	</body>
 </html>

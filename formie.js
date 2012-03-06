@@ -4,7 +4,6 @@
 		var settings = $.extend({
 			// Default action: disable the specified element.
 			'action' : function( element, truthyness ) {
-				console.log( truthyness );
 				if( truthyness ) {
 					element.removeAttr('disabled');
 				}
@@ -39,25 +38,23 @@
 			switch( p ) {
 				case 'formieEquals':
 					comparator = '=';
-					value = formieData[p];
+					value = data[p];
 					break;
 				case 'formieGreatorThan':
 					comparator = '>';
-					value = formieData[p];
+					value = data[p];
 					break;
 				case 'formieLessThan':
 					comparator = '<';
-					value = formieData[p];
+					value = data[p];
 					break;
 			}
 		}
 
-		console.log( childElement, parentElement );
 		return createExpressionCallback( childElement, parentElement, value, comparator, action );
 	};
 	
 	createExpressionCallback = function( childElement, parentElement, value, comparator, action ) {
-		console.log( comparator );
 		switch( comparator ) {
 			case '=':
 				return function() { action( childElement, parentElement.val() == value ); };

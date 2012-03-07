@@ -4,7 +4,6 @@
 		var settings = $.extend({
 			// Default action: disable the specified element.
 			'action' : function( element, truthyness ) {
-				console.log( element, truthyness );
 				if( truthyness ) {
 					element.removeAttr('disabled');
 				}
@@ -85,7 +84,6 @@
 	createValueInAction = function( childElement, parentElement, action ) {
 		var valueInArray = childElement.data('formieValueIn');
 		var splitString = valueInArray.split(',');
-		console.log( parentElement.val() );
 		return function() { action( childElement, $.inArray( parentElement.val(), splitString ) > -1 ); };
 	};
 

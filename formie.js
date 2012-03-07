@@ -40,6 +40,10 @@
 					comparator = '=';
 					value = data[p];
 					break;
+				case 'formieNotEquals':
+					comparator = '!=';
+					value = data[p];
+					break;
 				case 'formieGreatorThan':
 					comparator = '>';
 					value = data[p];
@@ -54,6 +58,8 @@
 		switch( comparator ) {
 			case '=':
 				return function() { action( childElement, parentElement.val() == value ); };
+			case '!=':
+				return function() { action( childElement, parentElement.val() != value ); };
 			case '>':
 				return function() { action( childElement, parentElement.val() > value ); };
 			case '<':

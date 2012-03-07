@@ -1,0 +1,43 @@
+<html>
+	<head>
+		<title>Formie tests</title>
+		<script src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js'></script>
+		<script src='../formie.js'></script>
+		<script>
+			$(document).ready(function() {
+				$('#testform').formie();
+
+				test("data-formie-value-in", function() {
+					$('#province').val('ON').change();
+					//equal( $('#city1').attr('disabled'), undefined, "Test that city1 is enabled when ON is selected" );
+					//equal( $('#city2').attr('disabled'), 'disabled', "Test that city2 is disabled when ON is selected" );
+					$('#province').val('AB').change();
+					//equal( $('#city1').attr('disabled'), 'disabled', "Test that city1 is disabled when AB is selected" );
+					//equal( $('#city2').attr('disabled'), undefined, "Test that city2 is enabled when AB is selected" );
+					ok( true );
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<h1 id="qunit-header">QUnit example</h1>
+		<h2 id="qunit-banner"></h2>
+		<div id="qunit-testrunner-toolbar"></div>
+		<h2 id="qunit-userAgent"></h2>
+		<ol id="qunit-tests"></ol>
+		<div id='qunit-fixture'>
+			<form id='testform'>
+				<select id='province' name='province'>
+					<option value=''></option>
+					<option value='ON'>Ontario</option>
+					<option value='AB'>Alberta</option>
+					<option value='QU'>Quebec</option>
+					<option value='NS'>Nova Scotia</option>
+					<option value='BC'>British Columbia</option>
+				</select>
+				<input type='text' id='textinput' data-formie-bind='province' data-formie-value-in='AB,BC'></input>
+				<input type='submit'></input>
+			</form>
+		</div>
+	</body>
+</html>

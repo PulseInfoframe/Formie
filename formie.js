@@ -18,8 +18,7 @@
 				else {
 					element.val('');
 				}
-			},
-			'clear-values': true
+			}
 		}, options);
 
 		// Plugin code goes here to respect chaining.

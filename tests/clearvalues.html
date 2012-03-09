@@ -7,16 +7,16 @@
 		<script src='../formie.js'></script>
 		<script>
 			$(document).ready(function() {
-				$('#testform').formie();
+				$('#testform').formie({
+					'clear-values': false
+				});
 
-				test("data-formie-value-in", function() {
+				test("clear-childs-value", function() {
 					$('#province').val('ON').change();
-					//equal( $('#city1').attr('disabled'), undefined, "Test that city1 is enabled when ON is selected" );
-					//equal( $('#city2').attr('disabled'), 'disabled', "Test that city2 is disabled when ON is selected" );
+					$('#childtext').val('somevalue');
+					equal( $('#childtext').val(), 'somevalue', 'test that the value was set.');
 					$('#province').val('AB').change();
-					//equal( $('#city1').attr('disabled'), 'disabled', "Test that city1 is disabled when AB is selected" );
-					//equal( $('#city2').attr('disabled'), undefined, "Test that city2 is enabled when AB is selected" );
-					ok( false, "This test isn't written yet." );
+					equal( $('#childtext').val(), '', 'test that the value was reset.');
 				});
 			});
 		</script>
@@ -29,16 +29,13 @@
 		<ol id="qunit-tests"></ol>
 		<div id='qunit-fixture'>
 			<form id='testform'>
+				<label for='province'>Province:</label>
 				<select id='province' name='province'>
 					<option value=''></option>
 					<option value='ON'>Ontario</option>
 					<option value='AB'>Alberta</option>
-					<option value='QU'>Quebec</option>
-					<option value='NS'>Nova Scotia</option>
-					<option value='BC'>British Columbia</option>
 				</select>
-				<input type='text' id='textinput' data-formie-bind='province' data-formie-value-in='AB,BC'></input>
-				<input type='submit'></input>
+				<input type='text' id='childtext' name='childtext' data-formie-bind='province' data-formie-equals='ON'>
 			</form>
 		</div>
 	</body>

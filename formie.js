@@ -5,14 +5,19 @@
 			// Default action: disable the specified element.
 			'action_event' : function( element, truthyness ) {
 				if( truthyness ) {
-					element.removeAttr('disabled');
+					element.prop('disabled', false);
 				}
 				else {
-					element.attr('disabled', 'disabled');
+					element.prop('disabled', true);
 				}
 			},
 			'clear_event': function( element ) {
-				element.val('');
+				if( element.prop('type') == 'checkbox' ) {
+					element.prop('checked', false);
+				}
+				else {
+					element.val('');
+				}
 			},
 			'clear-values': true
 		}, options);
@@ -90,7 +95,7 @@
 	
 	createCheckedHandler = function( childElement, parentElement, action, clear ) {
 		expression = function() {
-			return parentElement.attr('checked') == 'checked';
+			return parentElement.prop('checked') === true;
 		};
 		return createCallbacks( childElement, expression, action, clear );
 	};

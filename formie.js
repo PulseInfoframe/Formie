@@ -1,4 +1,6 @@
+/*global $:false */
 (function( $ ) {
+	'use strict';
 	$.fn.formie = function( options ) {
 		// Default settings
 		var settings = $.extend({
@@ -41,7 +43,7 @@
 		});
 	};
 
-	createBoundHandler = function( childElement, parentElement, action, clear ) {
+	var createBoundHandler = function( childElement, parentElement, action, clear ) {
 		var comparator = '';
 		var value = '';
 		var data = childElement.data();
@@ -86,29 +88,29 @@
 				expression = function() { return parentElement.val() < value; };
 				break;
 			case 'value_in':
-				return createValueInAction( childElement, parentElement, action, clear );
+				return createValueInHandler( childElement, parentElement, action, clear );
 		}
 
 		return createCallbacks( childElement, expression, action, clear );
 	};
 	
-	createCheckedHandler = function( childElement, parentElement, action, clear ) {
-		expression = function() {
+	var createCheckedHandler = function( childElement, parentElement, action, clear ) {
+		var expression = function() {
 			return parentElement.prop('checked') === true;
 		};
 		return createCallbacks( childElement, expression, action, clear );
 	};
 
-	createValueInAction = function( childElement, parentElement, action, clear ) {
+	var createValueInHandler = function( childElement, parentElement, action, clear ) {
 		var valueInArray = childElement.data('formieValueIn');
 		var splitString = valueInArray.split(',');
-		expression = function() {
+		var expression = function() {
 			return $.inArray( parentElement.val(), splitString ) > 1;
 		};
 		return createCallbacks( childElement, expression, action, clear );
 	};
 
-	createCallbacks = function( childElement, expression, action, clear ) {
+	var createCallbacks = function( childElement, expression, action, clear ) {
 		return function() {
 			action( childElement, expression() );
 			clear( childElement );

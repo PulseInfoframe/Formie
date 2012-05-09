@@ -113,7 +113,9 @@
 	var createCallbacks = function( childElement, expression, action, clear ) {
 		return function() {
 			action( childElement, expression() );
-			clear( childElement );
+			if( !expression() ) {
+				clear( childElement );
+			}
 		};
 	};
 

@@ -7,7 +7,7 @@ Formie lets you set up simple events based on changes to your form data.
 
 ```javascript
 $('#form').formie({
-	'action': 
+	'action_event': 
 	// @param element: jQuery selector for the element that is to be updated
 	// @param truthyness the value of the executed binding, ie false if binding conditions not met
 	function(element, truthyness) {

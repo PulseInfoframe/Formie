@@ -25,7 +25,7 @@
 
 		// Plugin code goes here to respect chaining.
 		return this.each(function() {
-			$(this).find(':input').each(function( index, element ) {
+			$('[data-formie-bind]').each(function( index, element ) {
 				var parentElement;
 				if( $(element).data('formieBind') ) {
 					parentElement = $('[name="' + $(element).data('formieBind') + '"]' ).last();

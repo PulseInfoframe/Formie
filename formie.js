@@ -31,14 +31,14 @@
 					parentElement = $('[name="' + $(element).data('formieBind') + '"]' ).last();
 					parentElement.on('change.formie', createBoundHandler( $(element), parentElement, settings.action_event, settings.clear_event ) ).change();
 				}
-				else if( $(element).data('formieIsChecked') ) {
-					parentElement = $('[name="' + $(element).data('formieIsChecked') + '"]' ).last();
-					parentElement.on('change.formie', createCheckedHandler( $(element), parentElement, settings.action_event, settings.clear_event ) ).change();
-				}
 				else if( $(element).data('formieValueIn') ) {
 					parentElement = $('[name="' + $(element).data('formieValueIn') + '"]' ).last();
 					parentElement.on('change.formie', createValueInHandler( $(element), parentElement, settings.action_event, settings.clear_event ) ).change();
 				}
+			});
+			$('[data-formie-is-checked]').each(function( index, element) {
+				var parentElement = $('[name="' + $(element).data('formieIsChecked') + '"]' ).last();
+				parentElement.on('change.formie', createCheckedHandler( $(element), parentElement, settings.action_event, settings.clear_event ) ).change();
 			});
 		});
 	};

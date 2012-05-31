@@ -93,7 +93,7 @@
 
 		return createCallbacks( childElement, expression, action, clear );
 	};
-	
+
 	var createCheckedHandler = function( childElement, parentElement, action, clear ) {
 		var expression = function() {
 			return parentElement.prop('checked') === true;
@@ -105,7 +105,7 @@
 		var valueInArray = childElement.data('formieValueIn');
 		var splitString = valueInArray.split(',');
 		var expression = function() {
-			return $.inArray( parentElement.val(), splitString ) > 1;
+			return $.inArray( parentElement.val(), splitString ) >= 0;
 		};
 		return createCallbacks( childElement, expression, action, clear );
 	};

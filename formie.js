@@ -1,4 +1,4 @@
-/*global $:false */
+/*global $:false console:false */
 (function( $ ) {
 	'use strict';
 	$.fn.formie = function( options ) {
@@ -26,14 +26,32 @@
 		// Plugin code goes here to respect chaining.
 		return this.each(function() {
 			$('[data-formie-bind]').each(function( index, element ) {
+				var action_event = settings.action_event;
+				var clear_event = settings.clear_event;
+
+				if( $(element).data('formieActionEvent') ) {
+					action_event = settings[ $(element).data('formieActionEvent') ];
+					if( action_event === undefined ) {
+						console.log( $(element).data('formieActionEvent') + ' was not defined in settings.');
+						return;
+					}
+				}
+				if( $(element).data('formieClearEvent') ) {
+					clear_event = settings[ $(element).data('formieClearEvent') ];
+					if( clear_event === undefined ) {
+						console.log( $(element).data('formieClearEvent') + ' was not defined in settings.');
+						return;
+					}
+				}
+
 				var parentElement;
 				if( $(element).data('formieBind') ) {
 					parentElement = $('[name="' + $(element).data('formieBind') + '"]' ).last();
-					parentElement.on('change.formie', createBoundHandler( $(element), parentElement, settings.action_event, settings.clear_event ) ).change();
+					parentElement.on('change.formie', createBoundHandler( $(element), parentElement, action_event, clear_event ) ).change();
 				}
 				else if( $(element).data('formieValueIn') ) {
 					parentElement = $('[name="' + $(element).data('formieValueIn') + '"]' ).last();
-					parentElement.on('change.formie', createValueInHandler( $(element), parentElement, settings.action_event, settings.clear_event ) ).change();
+					parentElement.on('change.formie', createValueInHandler( $(element), parentElement, action_event, clear_event ) ).change();
 				}
 			});
 			$('[data-formie-is-checked]').each(function( index, element) {

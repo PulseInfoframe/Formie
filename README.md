@@ -3,7 +3,7 @@
 Formie lets you set up simple events based on changes to your form data.
 
 ### Options
-* 'action' : a function that is called when the parent element has changed its value.
+* 'action_event' : a function that is called when the parent element has changed its value.
 
 ```javascript
 $('#form').formie({
@@ -55,4 +55,24 @@ Retruns true if the parents value is a set of values. Specified values should be
 	<option value='NS'>Nova Scotia</option>
 </select>
 <input type='text' data-formie-bind='province' data-value-in='AB,BC' />
+```
+
+### Multiple event handlers
+If you want to add additional events, you can do so by adding them as an entry in the settings.
+
+Then for the elements that need to run that function, you can specify its name using data-formie-action-event
+
+```javascript
+$('#form').formie({
+    custom: function(element, truthyness) {
+	}
+});
+```
+
+```html
+<select name='province'>
+	<option value='ON'>Ontario</option>
+	<option value='AB'>Alberta</option>
+</select>
+<input type='text' data-formie-bind='province' data-value-in='AB,BC' data-formie-action-event='custom' />
 ```

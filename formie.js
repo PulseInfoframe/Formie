@@ -55,8 +55,27 @@
 				}
 			});
 			$('[data-formie-is-checked]').each(function( index, element) {
+
+				var action_event = settings.action_event;
+				var clear_event = settings.clear_event;
+
+				if( $(element).data('formieActionEvent') ) {
+					action_event = settings[ $(element).data('formieActionEvent') ];
+					if( action_event === undefined ) {
+						console.log( $(element).data('formieActionEvent') + ' was not defined in settings.');
+						return;
+					}
+				}
+				if( $(element).data('formieClearEvent') ) {
+					clear_event = settings[ $(element).data('formieClearEvent') ];
+					if( clear_event === undefined ) {
+						console.log( $(element).data('formieClearEvent') + ' was not defined in settings.');
+						return;
+					}
+				}
+
 				var parentElement = $('[name="' + $(element).data('formieIsChecked') + '"]' ).last();
-				parentElement.on('change.formie', createCheckedHandler( $(element), parentElement, settings.action_event, settings.clear_event ) ).change();
+				parentElement.on('change.formie', createCheckedHandler( $(element), parentElement, action_event, clear_event ) ).change();
 			});
 		});
 	};
